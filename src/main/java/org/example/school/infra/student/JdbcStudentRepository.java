@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcStudentRepository implements StudentRepository {
@@ -82,7 +83,36 @@ public class JdbcStudentRepository implements StudentRepository {
 
     @Override
     public List<Student> findAllEnrolledStudents() {
-        return null;
+        try {
+            String sql =
+                    "SELECT S.CPF, S.NAME, S.EMAIL, P.DDD, P.PHONE " +
+                    "FROM STUDENT S " +
+                    "INNER JOIN PHONE P " +
+                    "ON P.CPF = S.CPF";
+            PreparedStatement pst = connection.prepareStatement(sql);
+            ResultSet resultSet = pst.executeQuery();
+            List<Student> students = new ArrayList<>();
+
+            while(resultSet.next()) {
+                String name = resultSet.getString("name");
+                String CPF = resultSet.getString("cpf");
+                String email = resultSet.getString("email");
+                String ddd = resultSet.getString("ddd");
+                String phone = resultSet.getString("phone");
+
+                Student student = builder
+                    .withNameCPFEmail(name, CPF, email)
+                    .withPhone(ddd, phone)
+                    .build();
+
+                students.add(student);
+            }
+
+            return students;
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
