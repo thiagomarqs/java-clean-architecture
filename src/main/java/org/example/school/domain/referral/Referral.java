@@ -1,4 +1,6 @@
-package org.example;
+package org.example.school.domain.referral;
+
+import org.example.school.domain.student.Student;
 
 import java.time.LocalDateTime;
 

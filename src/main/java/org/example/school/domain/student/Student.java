@@ -1,4 +1,4 @@
-package org.example;
+package org.example.school.domain.student;
 
 import java.util.List;
 

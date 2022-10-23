@@ -1,5 +1,6 @@
-package org.example;
+package org.example.school.domain.student;
 
+import org.example.school.domain.student.Email;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
